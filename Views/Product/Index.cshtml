@@ -1,0 +1,138 @@
+﻿@model PaginatedList<Product>
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <partial name="_ProductCard" model="product" />
+    }
+</div>
+
+
+<div class="input-group justify-content-center">
+    @if (Model.TotalPages > 1)
+    {
+        var disableSmallerPageNumbers = false;
+        var disableLargerPageNumbers = false;
+
+        if (Model.PageIndex == 1)
+        {
+            <a class="btn btn-default disabled">
+                <i class="fa fa-angle-left"></i> Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-pageNumber="1"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+               asp-route-currentSelection="@ViewData["CurrentSelection"]"
+               asp-route-sortbyorder="@ViewData["SortByOrder"]"
+               class="btn btn-default disabled">
+                1
+            </a>
+        }
+        else
+        {
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex-1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+               asp-route-currentSelection="@ViewData["CurrentSelection"]"
+               asp-route-sortbyorder="@ViewData["SortByOrder"]"
+               class="btn btn-default">
+                <i class="fa fa-angle-left"></i> Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-pageNumber="1"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+               asp-route-currentSelection="@ViewData["CurrentSelection"]"
+               asp-route-sortbyorder="@ViewData["SortByOrder"]"
+               class="btn btn-default">
+                1
+            </a>
+        }
+
+        for (int i = 2; i < Model.TotalPages; i++)
+        {
+            if (i < Model.PageIndex - 1)
+            {
+                if (disableSmallerPageNumbers == false)
+                {
+                    disableSmallerPageNumbers = true;
+                    <span>...</span>
+                }
+            }
+            else if (i > Model.PageIndex + 1)
+            {
+                if (disableLargerPageNumbers == false)
+                {
+                    disableLargerPageNumbers = true;
+                    <span>...</span>
+                }
+            }
+            else if (i == Model.PageIndex)
+            {
+                <a asp-action="Index"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+                   asp-route-currentSelection="@ViewData["CurrentSelection"]"
+                   asp-route-sortbyorder="@ViewData["SortByOrder"]"
+                   class="btn btn-default disabled">
+                    @i
+                </a>
+            }
+            else
+            {
+                <a asp-action="Index"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+                   asp-route-currentSelection="@ViewData["CurrentSelection"]"
+                   asp-route-sortbyorder="@ViewData["SortByOrder"]"
+                   class="btn btn-default">
+                    @i
+                </a>
+            }
+        }
+
+        if (Model.PageIndex == Model.TotalPages)
+        {
+            <a asp-action="Index"
+               asp-route-pageNumber="@Model.TotalPages"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+               asp-route-currentSelection="@ViewData["CurrentSelection"]"
+               asp-route-sortbyorder="@ViewData["SortByOrder"]"
+               class="btn btn-default disabled">
+                @Model.TotalPages
+            </a>
+            <a class="btn btn-default disabled">
+                Next <i class="fa fa-angle-right"></i>
+            </a>
+        }
+        else
+        {
+            <a asp-action="Index"
+               asp-route-pageNumber="@Model.TotalPages"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+               asp-route-currentSelection="@ViewData["CurrentSelection"]"
+               asp-route-sortbyorder="@ViewData["SortByOrder"]"
+               class="btn btn-default">
+                @Model.TotalPages
+            </a>
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex+1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-categoryAuthorSaleProductOfTheWeek="@ViewData["CategoryAuthorSaleProductOfTheWeek"]"
+               asp-route-currentSelection="@ViewData["CurrentSelection"]"
+               asp-route-sortbyorder="@ViewData["SortByOrder"]"
+               class="btn btn-default">
+                Next <i class="fa fa-angle-right"></i>
+            </a>
+        }
+    }
+
+</div>

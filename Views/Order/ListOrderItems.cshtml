@@ -1,0 +1,67 @@
+﻿@model IEnumerable<OrderItem>
+
+<h1>Edit</h1>
+
+<h4>Order</h4>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">
+                Change quantity
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Product.Title)
+            </th>
+            <th class="text-right">
+                @Html.DisplayNameFor(model => model.Product.Author)
+            </th>
+            <th class="text-right">
+                Subtotal
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-center">
+                    <a class="btn btn-success" asp-action="IncreaseOrderItemQuantity" asp-route-id="@item.OrderItemId">+</a>
+                    <a class="btn btn-danger" asp-action="DecreaseOrderItemQuantity" asp-route-id="@item.OrderItemId">-</a>
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.Product.Title)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.Product.Author)
+                </td>
+                <td class="text-right">
+                    @((item.Quantity * item.Price).ToString("c"))
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-danger" asp-action="DeleteOrderItem" asp-route-id="@item.OrderItemId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.Sum(oi => oi.Price * oi.Quantity).ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+<a class="btn btn-primary" asp-action="Browse" asp-route-id="@ViewData["OrderId"]">Add new product</a>
+<a class="btn btn-primary" asp-action="Save" asp-route-id="@ViewData["OrderId"]">Save changes</a>
+<a asp-action="Edit" asp-route-id="@ViewData["OrderId"]">Back</a>

@@ -1,0 +1,60 @@
+﻿@model ShoppingCartViewModel
+
+<h2>Your shopping cart</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">
+                Change quantity
+            </th>
+            <th class="text-right">Selected amount</th>
+            <th class="text-right">Product</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+        {
+        <tr>
+            <td class="text-center">
+                <a class="btn btn-success" asp-action="IncreaseShoppingCartItemQuantity" asp-route-id="@item.Product.ProductId">+</a>
+                <a class="btn btn-danger" asp-action="DecreaseShoppingCartItemQuantity" asp-route-id="@item.Product.ProductId">-</a>
+            </td>
+            <td class="text-right">@item.Quantity</td>
+            <td class="text-right">@item.Product.Title</td>
+
+            @if (item.Product.IsOnSale)
+            {
+                <td class="text-right">@item.Product.PriceOnSale.ToString("c")</td>
+                <td class="text-right">
+                    @((item.Quantity * item.Product.PriceOnSale).ToString("c"))
+                </td>
+            }
+            else
+            {
+                <td class="text-right">@item.Product.Price.ToString("c")</td>
+                <td class="text-right">
+                    @((item.Quantity * item.Product.Price).ToString("c"))
+                </td>
+            }
+            <td><a class="btn btn-danger" asp-action="RemoveFromShoppingCart" asp-route-id="@item.Product.ProductId">Delete</a></td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.ShoppingCartTotal.ToString("c")
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-controller="Order" asp-action="Checkout">Checkout now!</a>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<p class="text-danger">@TempData["CartEmptyMessage"]</p>
+<table style="height:150px"></table>
+

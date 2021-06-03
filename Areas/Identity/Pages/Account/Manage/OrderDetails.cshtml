@@ -1,0 +1,132 @@
+﻿@page
+@model OrderDetailsModel
+@{
+    ViewData["Title"] = "Order Details";
+    ViewData["ActivePage"] = ManageNavPages.OrderDetails;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<h1>Details</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.OrderId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.OrderId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.OrderDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.OrderDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.OrderTotal)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Input.Order.OrderTotal.ToString("c")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.IsShipped)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.IsShipped)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.AddressLine1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.AddressLine1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.AddressLine2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.AddressLine2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.ZipCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.ZipCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Input.Order.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Input.Order.PhoneNumber)
+        </dd>
+    </dl>
+
+    <h4>Order items</h4>
+    <hr />
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Input.Order.OrderItems[0].Product.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Input.Order.OrderItems[0].Product.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Input.Order.OrderItems[0].Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Input.Order.OrderItems[0].Price)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Input.Order.OrderItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @item.Price.ToString("c")
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-page="OrderHistory">Back to order history</a>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,88 @@
+﻿@model CreateProductViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+
+<h4>@ViewData["CreateProductMessage"]</h4>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.Title" class="control-label"></label>
+                <input asp-for="Product.Title" class="form-control" />
+                <span asp-validation-for="Product.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Author" class="control-label"></label>
+                <input asp-for="Product.Author" class="form-control" />
+                <span asp-validation-for="Product.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Description" class="control-label"></label>
+                <input asp-for="Product.Description" class="form-control" />
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.CategoryId" class="control-label"></label>
+                <select asp-for="Product.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Product.Price" class="form-control" />
+                    <span>&nbsp;&nbsp;kr</span>
+                </div>
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.PriceOnSale" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Product.PriceOnSale" class="form-control" />
+                    <span>&nbsp;&nbsp;kr</span>
+                </div>
+                <span asp-validation-for="Product.PriceOnSale" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Product.IsProductOfTheWeek" /> @Html.DisplayNameFor(model => model.Product.IsProductOfTheWeek)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Product.IsOnSale" /> @Html.DisplayNameFor(model => model.Product.IsOnSale)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Product.IsOnFrontPage" /> @Html.DisplayNameFor(model => model.Product.IsOnFrontPage)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="FormFile"></label>
+                <input asp-for="FormFile" class="form-control-file" accept="image/*">
+                <span asp-validation-for="FormFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThumbnailFormFile"></label>
+                <input asp-for="ThumbnailFormFile" class="form-control-file" accept="image/*" />
+                <span asp-validation-for="ThumbnailFormFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to homepage</a>
+</div>
+

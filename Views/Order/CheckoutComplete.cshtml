@@ -1,0 +1,45 @@
+﻿@model Order
+
+<h1>@ViewBag.CheckoutCompleteMessage </h1>
+
+<h2>Your receipt</h2>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Selected amount</th>
+            <th>Product</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td class="text-center">@item.Quantity</td>
+                <td class="text-left">@item.Product.Title</td>
+                <td class="text-right">@item.Price.ToString("c")</td>
+                <td class="text-right">
+                    @((item.Quantity * item.Price).ToString("c"))
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.OrderTotal.ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<h2>Your order will be sent to this address</h2>
+
+<ul style="list-style-type:none">
+    <li>@Model.AddressLine1</li>
+    <li>@Model.AddressLine2</li>
+    <li>@Model.ZipCode @(" ") @Model.City</li>
+    <li>@Model.Country</li>
+</ul>

@@ -1,0 +1,50 @@
+﻿@model Product
+
+<div class="col-sm-4 col-lg-4 col-md-4 d-flex justify-content-center">
+    <div class="card list-card">
+        <img class="card-img-top" src="@Model.ImageThumbnailUrl" alt="">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title">
+                <a asp-controller="Product"
+                   asp-action="Details"
+                   asp-route-id="@Model.ProductId">@Model.Title</a>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">@Model.Author</h6>
+
+            @if (Model.IsOnSale)
+            {
+                <h5>@Model.PriceOnSale.ToString("c")</h5>
+                <h6 class="text-muted"><s>@Model.Price.ToString("c")</s></h6>
+            }
+            else
+            {
+                <h5>@Model.Price.ToString("c")</h5>
+            }
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-primary mt-auto mb-0"
+                   asp-controller="Order"
+                   asp-action="AddToOrder"
+                   asp-route-id="@Model.ProductId"><span class="align-middle">Add to order</span></a>
+
+                <a class="btn btn-primary mt-0 mb-0"
+                   asp-controller="Product"
+                   asp-action="Edit"
+                   asp-route-id="@Model.ProductId">Edit</a>
+
+                <a class="btn btn-primary mt-0 mb-0"
+                   asp-controller="Product"
+                   asp-action="Delete"
+                   asp-route-id="@Model.ProductId">Delete</a>
+            }
+            else
+            {
+                <a class="btn btn-primary mt-auto"
+                   asp-controller="ShoppingCart"
+                   asp-action="AddToShoppingCart"
+                   asp-route-id="@Model.ProductId">Add to cart</a>
+            }
+        </div>
+    </div>
+</div>

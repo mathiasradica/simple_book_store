@@ -1,0 +1,7 @@
+﻿@model ShoppingCartViewModel
+
+<li class="nav-item">
+    <a class="nav-link" id="shoppingcart-icon" asp-controller="ShoppingCart" asp-action="Index">
+        <span class="fas fa-shopping-basket align-middle">@Model.ShoppingCart.ShoppingCartItems.Count</span>
+    </a>
+</li>

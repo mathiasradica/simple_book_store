@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Simple Book Store";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <nav id="nav-1" class="navbar bg-light">
+            <div id="search-container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><span class="align-middle"><img src="~/images/logo.png" /></span></a>
+                <form class="form-inline" asp-controller="Product" asp-action="Index" method="get">
+                    <div class="input-group mt-2 mb-2">
+                        <input id="search-box" class="form-control text-muted form-control" type="search" name="searchString" size="70" placeholder="What are you looking for (* = all)?" autocomplete="off" />
+                        <select class="custom-select col-sm-3" name="sortByOrder">
+                            <option value="sortby" selected>Sort by</option>
+                            <option value="title_asc">Title asc</option>
+                            <option value="title_desc">Title desc</option>
+                            <option value="author_asc">Author asc</option>
+                            <option value="author_desc">Author desc</option>
+                            <option value="price_asc">Price asc</option>
+                            <option value="price_desc">Price desc</option>
+                        </select>
+                        <button id="search-button" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+        </nav>
+        <nav class="navbar navbar-expand-xl navbar-light bg-custom">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Contact" asp-action="Index">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Product" asp-action="Index" asp-route-categoryAuthorSaleProductOfTheWeek="Sale">Sale</a>
+                    </li>
+                    @await Component.InvokeAsync("CategoryMenu")
+                    @await Component.InvokeAsync("AuthorMenu")
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="ApplicationUser" asp-action="Index">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Product" asp-action="Create">Create product</a>
+                        </li>
+                    }
+                    <partial name="_LoginPartial" />
+                    @if (!User.IsInRole("Admin"))
+                    {
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+        <footer class="border-top footer text-muted">
+            &copy; 2021 - Simple Book Store - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

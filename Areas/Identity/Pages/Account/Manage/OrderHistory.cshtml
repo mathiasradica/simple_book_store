@@ -1,0 +1,54 @@
+﻿@page
+@model OrderHistoryModel
+@{
+    ViewData["Title"] = "Order History";
+    ViewData["ActivePage"] = ManageNavPages.OrderHistory;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.OrderHistory[0].OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.OrderHistory[0].OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.OrderHistory[0].OrderTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Input.OrderHistory[0].IsShipped)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Input.OrderHistory)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => order.OrderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.OrderDate)
+            </td>
+            <td>
+                @order.OrderTotal.ToString("c")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => order.IsShipped)
+            </td>
+            <td>
+                <a asp-page="OrderDetails" asp-route-id="@order.OrderId">Order details</a>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

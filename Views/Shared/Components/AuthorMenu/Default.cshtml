@@ -1,0 +1,26 @@
+﻿@model IEnumerable<string>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Shop by author
+    </a>
+
+    @{
+        var list = Model.ToList();
+        list.Add("All products");
+        var rows = (list.Count() + 1) % 5 == 0 ? (list.Count() + 1) / 5 : (list.Count() + 1) / 5 + 1;
+    }
+
+    <ul id="author-dropdown-menu" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+        @for (var i = 0; i < 5; i++)
+        {
+            <li class="col-md-2">
+                @foreach (var author in list.Skip(i * rows).Take(rows))
+                {
+                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-currentSelection="@author" asp-route-categoryAuthorSaleProductOfTheWeek="Author">@author</a>
+                }
+            </li>
+        }
+    </ul>
+</li>
